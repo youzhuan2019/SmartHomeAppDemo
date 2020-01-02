@@ -203,6 +203,7 @@ public class SmartHomeActionImp implements ISmartHostAction,
 		devices = new ArrayList<>();
 		//添加虚拟设备数据
 		for(int i = 1;i<=15;i++){
+			//appliance  具体说明参考智能家居协议中的发现设备说明
 			Appliance appliance = new Appliance();
 			if(i < 2){
 				appliance.setApplianceId("switch"+i);
@@ -224,6 +225,10 @@ public class SmartHomeActionImp implements ISmartHostAction,
 				appliance.setApplianceId("light"+i);
 				appliance.setFriendlyName("灯"+i);
 				appliance.setApplianceTypes(YzDevType.LIGHT);
+				if(i == 11){
+					//如果你的灯具有RGB属性可以通过设置Action来告诉主机，这样可以进入具体的操作页面
+					appliance.setActions("setColor");
+				}
 			}
 			devices.add(appliance);
 		}
