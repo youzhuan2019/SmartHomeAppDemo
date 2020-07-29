@@ -20,6 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jni']
+        }
+    }
+
 }
 repositories {
     flatDir {
@@ -29,10 +36,14 @@ repositories {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation name: 'yz_iot_v0.1_alpha',ext:"aar"
+    implementation name: 'iot-debug',ext:"aar"
+    implementation files('libs/HwSmartHomeData.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
     implementation 'com.alibaba:fastjson:1.1.71.android'
+    //富家居需要引用的库
+    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

@@ -1,7 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.youzhuan.demoservcie">
 
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -9,11 +18,35 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <service android:name=".CustomService">
+
+        <service android:name=".FjjService">
             <intent-filter>
                 <action android:name="com.youzhuan.iotserver"/>
             </intent-filter>
         </service>
+
+        <receiver android:name=".HwBroadcastReceiver">
+            <intent-filter>
+                <!--初始化成功-->
+                <action android:name="action_init_success"/>
+                <!--初始化失败-->
+                <action android:name="action_init_failed"/>
+                <!--用户登录成功-->
+                <action android:name="action_user_login_success"/>
+                <!--用户登录失败-->
+                <action android:name="action_user_login_error"/>
+                <!--网关列表-->
+                <action android:name="action_gateway_list_success"/>
+                <!--网关列表失败-->
+                <action android:name="action_gateway_list_error"/>
+                <!--网关登录成功-->
+                <action android:name="action_gateway_login_success"/>
+                <!--网关登录失败-->
+                <action android:name="action_gateway_login_error"/>
+                <action android:name="action_user_resgister_error"/>
+                <action android:name="action_user_resgister_success"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

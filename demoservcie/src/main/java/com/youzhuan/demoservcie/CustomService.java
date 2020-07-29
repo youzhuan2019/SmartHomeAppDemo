@@ -43,13 +43,13 @@ public class CustomService extends YzIotService {
     private void initTheVirtualDevice() {
         lightOrSwitch();
         Appliance appliance = new Appliance();
-        appliance.setApplianceId(4);
+        appliance.setApplianceIdByInt(4);
         appliance.setApplianceTypes(YzDevType.CURTAIN);
         appliance.setDeviceName("我的窗帘");
         appliance.setActions(YzDevAction.turnOn, YzDevAction.turnOff);
         virtualDevice.add(appliance);
         appliance = new Appliance();
-        appliance.setApplianceId(5);
+        appliance.setApplianceIdByInt(5);
         appliance.setApplianceTypes(YzDevType.AIR_CONDITION);
         appliance.setDeviceName("1号空调");
         appliance.setActions(YzDevAction.turnOn,
@@ -58,7 +58,7 @@ public class CustomService extends YzIotService {
                 YzDevAction.setMode);
         virtualDevice.add(appliance);
         appliance = new Appliance();
-        appliance.setApplianceId(6);
+        appliance.setApplianceIdByInt(6);
         appliance.setApplianceTypes(YzDevType.TV_SET);
         appliance.setDeviceName("电视机");
         appliance.setActions(YzDevAction.turnOn,
@@ -67,7 +67,7 @@ public class CustomService extends YzIotService {
                 YzDevAction.setMode);
         virtualDevice.add(appliance);
         Appliance caideng = new Appliance();
-        caideng.setApplianceId(7);
+        caideng.setApplianceIdByInt(7);
         caideng.setApplianceTypes(YzDevType.LIGHT_RGB);
         caideng.setDeviceName("彩灯");
         caideng.setActions(YzDevAction.turnOn,
@@ -76,7 +76,7 @@ public class CustomService extends YzIotService {
         virtualDevice.add(caideng);
         //地暖
         Appliance floorWarm = new Appliance();
-        floorWarm.setApplianceId(8);
+        floorWarm.setApplianceIdByInt(8);
         floorWarm.setApplianceTypes(YzDevType.FLOOR_WARM);
         floorWarm.setDeviceName("地暖");
         floorWarm.setActions(YzDevAction.turnOn,
@@ -86,35 +86,35 @@ public class CustomService extends YzIotService {
         virtualDevice.add(floorWarm);
         //风扇
         Appliance fan = new Appliance();
-        fan.setApplianceId(9);
+        fan.setApplianceIdByInt(9);
         fan.setApplianceTypes(YzDevType.FAN);
         fan.setDeviceName("风扇");
         fan.setActions(YzDevAction.turnOn,
                 YzDevAction.turnOff);
         virtualDevice.add(fan);
         Appliance air_fresher = new Appliance();
-        air_fresher.setApplianceId(10);
+        air_fresher.setApplianceIdByInt(10);
         air_fresher.setApplianceTypes(YzDevType.AIR_FRESHER);
         air_fresher.setDeviceName("新风机");
         air_fresher.setActions(YzDevAction.turnOn,
                 YzDevAction.turnOff);
         virtualDevice.add(air_fresher);
         Appliance air_purifier = new Appliance();
-        air_purifier.setApplianceId(11);
+        air_purifier.setApplianceIdByInt(11);
         air_purifier.setApplianceTypes(YzDevType.AIR_PURIFIER);
         air_purifier.setDeviceName("空气净化器");
         air_purifier.setActions(YzDevAction.turnOn,
                 YzDevAction.turnOff);
         virtualDevice.add(air_purifier);
         Appliance temperatureLight = new Appliance();
-        temperatureLight.setApplianceId(12);
+        temperatureLight.setApplianceIdByInt(12);
         temperatureLight.setApplianceTypes(YzDevType.LIGHT_CT);
         temperatureLight.setDeviceName("色温灯");
         temperatureLight.setActions(YzDevAction.turnOn,
                 YzDevAction.turnOff);
         virtualDevice.add(temperatureLight);
         Appliance closeRack = new Appliance();
-        closeRack.setApplianceId(13);
+        closeRack.setApplianceIdByInt(13);
         closeRack.setApplianceTypes(YzDevType.CLOTHES_RACK);
         closeRack.setDeviceName("晾衣架");
         closeRack.setActions(YzDevAction.turnOn,
@@ -124,18 +124,18 @@ public class CustomService extends YzIotService {
 
     private void lightOrSwitch() {
         Appliance appliance = new Appliance();
-        appliance.setApplianceId(1);
+        appliance.setApplianceIdByInt(1);
         appliance.setDeviceName(1+"灯");
         appliance.setApplianceTypes(YzDevType.LIGHT);
         appliance.setActions(YzDevAction.turnOn,YzDevAction.turnOff);
         virtualDevice.add(appliance);
         appliance = appliance.clone();
-        appliance.setApplianceId(2);
+        appliance.setApplianceIdByInt(2);
         appliance.setApplianceTypes(YzDevType.SWITCH);
         appliance.setDeviceName(2+"开关");
         virtualDevice.add(appliance);
         appliance = appliance.clone();
-        appliance.setApplianceId(3);
+        appliance.setApplianceIdByInt(3);
         appliance.setApplianceTypes(YzDevType.SOCKET);
         appliance.setDeviceName(3+"插座");
         virtualDevice.add(appliance);
@@ -146,7 +146,7 @@ public class CustomService extends YzIotService {
         //实例化一个设备对象
         Appliance appliance = new Appliance();
         //设置设备的唯一Id值
-        appliance.setApplianceId(1);
+        appliance.setApplianceIdByInt(1);
         //设置设备名称
         appliance.setDeviceName(1+"灯");
         //设置设备类型
