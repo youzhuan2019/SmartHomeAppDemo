@@ -1,12 +1,16 @@
 package com.youzhuan.demoservcie;
 
-import android.content.Context;
 import android.os.Environment;
 
+import com.alibaba.fastjson.JSON;
 import com.smarthome.main.HwVoiceHandle;
 import com.smarthome.main.constant.HwConstantType;
 import com.smarthome.main.model.bean.HwElectricInfo;
 import com.smarthome.main.model.bean.HwGatewayInfo;
+import com.socks.library.KLog;
+import com.youzhuan.iot.constant.SdkAction;
+import com.youzhuan.iot.constant.YzRequestCode;
+import com.youzhuan.iot.model.ControlRequest;
 
 import java.util.List;
 
@@ -15,22 +19,23 @@ import java.util.List;
  * Create By 2020-07-22
  * 富家居
  */
-public class HjjManager {
-    private static final String TAG = HjjManager.class.getName();
+public class FjjManager {
+    private static final String TAG = FjjManager.class.getName();
     //单例对象
-    private static HjjManager instance;
+    private static FjjManager instance;
     private HwVoiceHandle hwVoiceHandle;
-    private boolean isLogin;
+    private NotifyManager mNotifyManager;
     //私有构造方法
-    private HjjManager(){
+    private FjjManager(){
         hwVoiceHandle = new HwVoiceHandle(App.getInstance());
+        mNotifyManager = NotifyManager.getInstance();
     }
     //获取实例
-    public static HjjManager getInstance(){
+    public static FjjManager getInstance(){
         if(instance == null){
-            synchronized(HjjManager.class){
+            synchronized(FjjManager.class){
                 if(instance == null){
-                    instance = new HjjManager();
+                    instance = new FjjManager();
                 }
             }
         }
@@ -41,13 +46,6 @@ public class HjjManager {
         return hwVoiceHandle;
     }
 
-    public void setLogin(boolean login) {
-        isLogin = login;
-    }
-
-    public boolean isLogin() {
-        return isLogin;
-    }
 
     public HwElectricInfo getDeviceById(String id){
         for (HwElectricInfo hwElectricInfo : hwVoiceHandle.getDeviceInfo()) {
@@ -56,6 +54,7 @@ public class HjjManager {
                 return hwElectricInfo;
             }
         }
+        KLog.e(TAG,"富家居设备数量:"+hwVoiceHandle.getDeviceInfo().size());
         return null;
     }
 
@@ -87,10 +86,28 @@ public class HjjManager {
 
     /**
      * 设备控制
-     * @param devId
+     * @param request
      */
-    public void ctrl(String devId) {
-        HwElectricInfo info = getDeviceById(devId);
-        hwVoiceHandle.ctlDevice(HwConstantType.VOICE_CLOSE_TYPE,info);
+    public void ctrl(ControlRequest request) {
+        HwElectricInfo info = getDeviceById(request.getAppliance().getApplianceId());
+        if(info!=null){
+            KLog.e("设备控制："+info.getDeviceNames());
+            switch (request.getType()){
+                case YzRequestCode.TurnOnRequest:
+                    hwVoiceHandle.ctlDevice(HwConstantType.VOICE_OPEN_TYPE,info);
+                    break;
+                case YzRequestCode.TurnOffRequest:
+                    hwVoiceHandle.ctlDevice(HwConstantType.VOICE_CLOSE_TYPE,info);
+                    break;
+                default:
+                    mNotifyManager.notifyHost(SdkAction.CONTROLLER_FAIL, JSON.toJSONString(request.getAppliance()));
+            }
+        }else{
+            queryDevices();
+            KLog.e("未找到设备");
+        }
     }
+
+
+
 }

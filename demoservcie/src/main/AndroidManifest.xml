@@ -45,6 +45,8 @@
                 <action android:name="action_gateway_login_error"/>
                 <action android:name="action_user_resgister_error"/>
                 <action android:name="action_user_resgister_success"/>
+                <!--设备状态发生改变-->
+                <action android:name="action_device_state_change"/>
             </intent-filter>
         </receiver>
 
