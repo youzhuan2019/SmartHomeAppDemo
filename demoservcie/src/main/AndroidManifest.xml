@@ -19,37 +19,11 @@
         android:theme="@style/AppTheme" >
 
 
-        <service android:name=".FjjService">
+        <service android:name=".CustomService">
             <intent-filter>
                 <action android:name="com.youzhuan.iotserver"/>
             </intent-filter>
         </service>
-
-        <receiver android:name=".HwBroadcastReceiver">
-            <intent-filter>
-                <!--初始化成功-->
-                <action android:name="action_init_success"/>
-                <!--初始化失败-->
-                <action android:name="action_init_failed"/>
-                <!--用户登录成功-->
-                <action android:name="action_user_login_success"/>
-                <!--用户登录失败-->
-                <action android:name="action_user_login_error"/>
-                <!--网关列表-->
-                <action android:name="action_gateway_list_success"/>
-                <!--网关列表失败-->
-                <action android:name="action_gateway_list_error"/>
-                <!--网关登录成功-->
-                <action android:name="action_gateway_login_success"/>
-                <!--网关登录失败-->
-                <action android:name="action_gateway_login_error"/>
-                <action android:name="action_user_resgister_error"/>
-                <action android:name="action_user_resgister_success"/>
-                <!--设备状态发生改变-->
-                <action android:name="action_device_state_change"/>
-            </intent-filter>
-        </receiver>
-
     </application>
 
 </manifest>

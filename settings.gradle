@@ -1,2 +1,3 @@
+include ':fjj'
 include ':demoservcie'
 rootProject.name='SmartHomeAppDemo'
