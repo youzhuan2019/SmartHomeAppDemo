@@ -11,10 +11,8 @@ import com.youzhuan.iot.constant.YzAttribute;
 import com.youzhuan.iot.constant.YzDevAction;
 import com.youzhuan.iot.constant.YzDevType;
 import com.youzhuan.iot.constant.YzRequestCode;
-import com.youzhuan.iot.constant.YzResponseCode;
 import com.youzhuan.iot.model.Appliance;
 import com.youzhuan.iot.model.ControlRequest;
-import com.youzhuan.iot.model.ControlResult;
 import com.youzhuan.iot.model.SdkInfoConfig;
 import com.youzhuan.iot.model.attr.IotColor;
 
@@ -162,68 +160,47 @@ public class CustomService extends YzIotService {
     @Override
     public void applianceControl(ControlRequest controlRequest) {
         Appliance appliance = controlRequest.getAppliance();
-        ControlResult result = new ControlResult();
-        JSONObject jsonObject = new JSONObject();
+        JSONObject result = new JSONObject();
+        JSONObject attributes = new JSONObject();
+        result.put("applianceId",appliance.getApplianceId());
         switch (controlRequest.getType()){
             case YzRequestCode.TurnOnRequest:
-                //设置响应的Code
-                result.setResponse(YzResponseCode.TurnOnConfirmation);
                 //设置设备属性值为打开
-                jsonObject.put(YzAttribute.turnOnState,"ON");
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.turnOnState,"ON");
                 break;
             case YzRequestCode.TurnOffRequest:
-                result.setResponse(YzResponseCode.TurnOffConfirmation);
-                jsonObject.put(YzAttribute.turnOnState,"OFF");
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.turnOnState,"OFF");
                 break;
             case YzRequestCode.PauseRequest:
-                result.setResponse(YzResponseCode.PauseConfirmation);
-                jsonObject.put(YzAttribute.turnOnState,"OFF");
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.pauseState,true);
                 break;
             case YzRequestCode.SetTemperatureRequest:
                 //获取请求的温度值
                 int temperature = controlRequest.getValues().getIntValue(YzAttribute.temperature);
-                //设置响应的Code
-                result.setResponse(YzResponseCode.SetTemperatureConfirmation);
                 //设置设备属性值
-                jsonObject.put(YzAttribute.temperature,temperature);
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.temperature,temperature);
                 break;
             case YzRequestCode.SetModeRequest:
-                result.setResponse(YzResponseCode.SetModeConfirmation);
                 String mode = controlRequest.getValues().getString(YzAttribute.mode);
-                jsonObject.put(YzAttribute.mode,mode);
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.mode,mode);
                 break;
             case YzRequestCode.SetFanSpeedRequest:
-                result.setResponse(YzResponseCode.SetFanSpeedConfirmation);
                 if(controlRequest.getValues().containsKey(YzAttribute.fanSpeedLevel)){
                     //设置的是档位值
                     String fanSpeedLevel = controlRequest.getValues().getString(YzAttribute.fanSpeedLevel);
-                    jsonObject.put(YzAttribute.fanSpeedLevel,fanSpeedLevel);
+                    attributes.put(YzAttribute.fanSpeedLevel,fanSpeedLevel);
                 }else{
                     //设置的是具体值
                     String fanSpeedValue = controlRequest.getValues().getString(YzAttribute.fanSpeedValue);
-                    jsonObject.put(YzAttribute.fanSpeedLevel,fanSpeedValue);
+                    attributes.put(YzAttribute.fanSpeedLevel,fanSpeedValue);
                 }
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
                 break;
             case YzRequestCode.SetColorRequest:
-                result.setResponse(YzResponseCode.SetColorConfirmation);
                 IotColor color = controlRequest.getValues().getObject(YzAttribute.color,IotColor.class);
-                jsonObject.put(YzAttribute.color,color);
-                appliance.setAttributes(jsonObject);
-                result.setAppliance(appliance);
+                attributes.put(YzAttribute.color,color);
                 break;
         }
+        result.put("attributes",attributes);
         notifyHost(SdkAction.CONTROLLER_SUCCESS, JSON.toJSONString(result));
     }
 
