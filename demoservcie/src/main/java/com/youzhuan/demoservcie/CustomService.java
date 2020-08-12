@@ -158,7 +158,8 @@ public class CustomService extends YzIotService {
     }
 
     @Override
-    public void applianceControl(ControlRequest controlRequest) {
+    public void applianceControl(String requestJson) {
+        ControlRequest controlRequest = JSON.parseObject(requestJson,ControlRequest.class);
         Appliance appliance = controlRequest.getAppliance();
         JSONObject result = new JSONObject();
         JSONObject attributes = new JSONObject();
